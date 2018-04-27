@@ -1,0 +1,57 @@
+<view class="page">
+  <!-- 车牌号码输入框 -->
+  <view class="carNumber">
+    <view class="weui-cells__title">请输入车牌号码后在使用</view>
+    <!-- 车牌号头两位 -->
+    <view class="carNumber-items">
+      <view class="carNumber-items-box" bindtap='openKeyboard'>
+        <view class="carNumber-items-province carNumber-items-box-list">{{carnum[0] || ''}}</view>
+        <view class="carNumber-items-En carNumber-items-box-list">{{carnum[1] || ''}}</view>
+      </view>
+      <!-- 常规 -->
+      <view class="carNumber-item" bindtap='openKeyboard'>{{carnum[2] || ''}}</view>
+      <view class="carNumber-item" bindtap='openKeyboard'>{{carnum[3] || ''}}</view>
+      <view class="carNumber-item" bindtap='openKeyboard'>{{carnum[4] || ''}}</view>
+      <view class="carNumber-item" bindtap='openKeyboard'>{{carnum[5] || ''}}</view>
+      <view class="carNumber-item" bindtap='openKeyboard'>{{carnum[6] || ''}}</view>
+      <!-- 新能源 -->
+      <view class="carNumber-item {{showNewPower ? '': 'carNumber-item-newpower'}}">
+        <view wx:if="{{!showNewPower}}" bindtap='showPowerBtn'>
+          <view class="carNumber-newpower-add">+</view>
+          <view>新能源</view>
+        </view>
+        <view wx:if="{{showNewPower}}" bindtap='openKeyboard'>
+          {{carnum[7]}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提交车牌 -->
+  <button class="carNumberBtn" bindtap='submitNumber' style="background: #333333;color:#fff;" type="default">确定</button>
+
+  <!-- 虚拟键盘 -->
+  <view class="keyboard" hidden='{{!KeyboardState}}'>
+    <view class="keyboardClose">
+      <view class="keyboardClose_btn" bindtap='closeKeyboard'>关闭</view>
+    </view>
+    <!-- 省份简写键盘 -->
+    <view class="keyboard-item" hidden="{{carnum[0]}}">
+      <view class="keyboard-line" wx:for="{{provinces}}" wx:key="{{index}}">
+        <view class="keyboard-btn" wx:for="{{item}}" wx:key="{{index}}" data-val="{{itemlist}}" wx:for-item="itemlist" bindtap='bindChoose'>{{itemlist}}</view>
+      </view>
+      <view class="keyboard-del" bindtap='bindDelChoose'>
+        <text class="font_family icon-shanchu keyboard-del-font"></text>
+      </view>
+    </view>
+    <!-- 车牌号码选择键盘 -->
+    <view class="keyboard-item iscarnumber" hidden="{{!carnum[0]}}">
+      <view class="keyboard-line" wx:for="{{numbers}}" wx:key="{{index}}">
+        <view class="keyboard-btn" wx:for="{{item}}" wx:key="{{index}}" data-val="{{itemlist}}" wx:for-item="itemlist" bindtap='bindChoose'>{{itemlist}}</view>
+      </view>
+      <view class="keyboard-del" bindtap='bindDelChoose'>
+        <text class="font_family icon-shanchu keyboard-del-font"></text>
+      </view>
+    </view>
+  </view>
+</view>
